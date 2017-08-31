@@ -1,11 +1,9 @@
+using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
 
 namespace KellyStuard.Noip
 {
@@ -13,10 +11,10 @@ namespace KellyStuard.Noip
 	{
 		public UpdateProcess(HttpClient updateclient, string queryString, CancellationToken cancellationToken, ILogger<UpdateProcess> logger)
 		{
-			this._updateClient = updateclient;
-			this._queryString = queryString;
-			this._cancellationToken = cancellationToken;
-			this._logger = logger;
+			_updateClient = updateclient;
+			_queryString = queryString;
+			_cancellationToken = cancellationToken;
+			_logger = logger;
 		}
 
 		public async Task Run(TimeSpan interval)
