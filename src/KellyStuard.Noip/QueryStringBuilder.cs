@@ -17,22 +17,22 @@ namespace KellyStuard.Noip
 		{
 			if (settings == null) throw new ArgumentNullException(nameof(settings));
 
-			var result = new QueryStringBuilder();
+			return new QueryStringBuilder(
+				settings.Hostnames,
+				settings.MyIp,
+				settings.Offline
+			);
+		}
 
-			if (settings.Hostname != null)
-				result.Add("hostname", settings.Hostname);
-			else if (settings.Hostnames.Length != 0)
-				result.Add("hostname", settings.Hostnames);
-			else
-				throw new ArgumentException("Either hostname or hostnames must be set", nameof(settings));
+		public QueryStringBuilder() { }
 
-			if (settings.MyIp != null)
-				result.Add("myip", settings.MyIp);
-
-			if (settings.Offline.HasValue)
-				result.Add("offline", (settings.Offline.Value) ? "YES" : "NO");
-
-			return result;
+		public QueryStringBuilder(string hostnames, string myip, bool? offline)
+		{
+			Add("hostname", hostnames?.Split(',') ?? throw new ArgumentNullException(nameof(hostnames)));
+			if (myip != null)
+				Add("myip", myip);
+			if (offline.HasValue)
+				Add("offline", (offline.Value) ? "YES" : "NO");
 		}
 
 		/// <summary>

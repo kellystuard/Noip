@@ -19,6 +19,58 @@ namespace KellyStuard.Noip.UnitTest
 		}
 
 		[Fact]
+		public void BuilderWithNullsShouldThrow()
+		{
+			// arrange
+			var builder = new QueryStringBuilder();
+
+			// act
+			Action result = () => builder.Add(null, (string)null);
+
+			// assert
+			Assert.Throws<ArgumentNullException>("name", result);
+		}
+
+		[Fact]
+		public void BuilderWithNullNameShouldThrow()
+		{
+			// arrange
+			var builder = new QueryStringBuilder();
+
+			// act
+			Action result = () => builder.Add(null, "bar");
+
+			// assert
+			Assert.Throws<ArgumentNullException>("name", result);
+		}
+
+		[Fact]
+		public void BuilderWithNullValueShouldThrow()
+		{
+			// arrange
+			var builder = new QueryStringBuilder();
+
+			// act
+			Action result = () => builder.Add("foo", (string)null);
+
+			// assert
+			Assert.Throws<ArgumentNullException>("value", result);
+		}
+
+		[Fact]
+		public void BuilderWithNullValuesShouldThrow()
+		{
+			// arrange
+			var builder = new QueryStringBuilder();
+
+			// act
+			Action result = () => builder.Add("foo", new string[] { null });
+
+			// assert
+			Assert.Throws<ArgumentNullException>("value", result);
+		}
+
+		[Fact]
 		public void BuilderWithSingleAddShouldHaveSingleParam()
 		{
 			// arrange
@@ -77,6 +129,19 @@ namespace KellyStuard.Noip.UnitTest
 		}
 
 		[Fact]
+		public void BuilderWithRemoveNullShouldThrow()
+		{
+			// arrange
+			var builder = new QueryStringBuilder();
+
+			// act
+			Action result = () => builder.Remove(null);
+
+			// assert
+			Assert.Throws<ArgumentNullException>("name", result);
+		}
+
+		[Fact]
 		public void BuilderWithRemoveEmptyShouldHaveReturnFalseAndBeEmpty()
 		{
 			// arrange
@@ -130,6 +195,19 @@ namespace KellyStuard.Noip.UnitTest
 			// act
 			builder.Add("first", "value");
 			builder.Reset();
+			var result = builder.ToString();
+
+			// assert
+			Assert.Equal("", result);
+		}
+
+		[Fact]
+		public void EmptyBuilderToStringShouldBeEmpty()
+		{
+			// arrange
+			var builder = new QueryStringBuilder();
+
+			// act
 			var result = builder.ToString();
 
 			// assert
